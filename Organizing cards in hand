@@ -1,0 +1,53 @@
+/*
+  Title: Organizing cards in hand
+  Problem Statement:
+  Write a program to simulate organizing cards in hand.
+  Implement Insertion Sort to arrange the cards in ascending order.
+
+  Algorithm Used: Insertion Sort
+  Time Complexity: O(n^2) in worst case, O(n) in best case
+*/
+
+#include <iostream>
+using namespace std;
+
+class Insertion {
+    public:
+        int size, i, j, key;
+
+        void InsertionSort() {
+            cout << "Enter number of cards: " << endl;
+            cin >> size;
+
+            int arr[size];
+            cout << "Enter " << size << " integers for cards:" << endl;
+            for(i = 0; i < size; i++) {
+                cin >> arr[i];
+            }
+
+            // Insertion sort algorithm
+            for(i = 1; i < size; i++) {
+                key = arr[i];
+                j = i - 1;
+
+                // Shift elements greater than key to one position ahead
+                while(j >= 0 && arr[j] > key) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+                arr[j + 1] = key;
+            }
+
+            // Display sorted array
+            cout << "\nSorted array of cards in ascending order: " << endl;
+            for(i = 0; i < size; i++) {
+                cout << arr[i] << " ";
+            }
+        }
+};
+
+int main() {
+    Insertion card;
+    card.InsertionSort();
+    return 0;
+}
