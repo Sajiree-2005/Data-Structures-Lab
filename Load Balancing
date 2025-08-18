@@ -1,0 +1,66 @@
+/*
+  Title: Load Balancing
+  Problem Statement:
+  Write a program to simulate a simple load balancing system.
+  Distribute incoming requests across multiple servers using a hash function.
+  Each request ID is assigned to a server based on the hash value
+  (sum of ASCII values of characters % number of servers).
+
+  Data Structure Used: Hashing (Hash Table)
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int N, R, i, hash_val;
+
+    // Input number of servers and requests
+    cout << "Enter number of servers: " << endl;
+    cin >> N;
+    cout << "Enter number of incoming requests: " << endl;
+    cin >> R;
+
+    string requests[R];
+    string hash_server[N][R];   // each server can hold multiple requests
+    int count[N];               // to track number of requests per server
+
+    // Initialize counters
+    for (i = 0; i < N; i++) {
+        count[i] = 0;
+    }
+
+    cout << "Enter request IDs:" << endl;
+
+    // Process each request
+    for(i = 0; i < R; i++) {
+        cout << "Request " << i + 1 << ": ";
+        cin >> requests[i];
+
+        // Hash function: sum of ASCII chars % N
+        int sum = 0;
+        for(char c : requests[i]) {
+            sum += (int)c;
+        }
+        hash_val = sum % N;
+
+        // Assign to server
+        hash_server[hash_val][count[hash_val]] = requests[i];
+        count[hash_val]++;
+
+        cout << "Request '" << requests[i] << "' is handled by Server " << hash_val << endl;
+    }
+
+    // Display server load summary
+    cout << "\nServer Load Summary:" << endl;
+    for(i = 0; i < N; i++) {
+        cout << "Server " << i << " handled requests:";
+        for(int j = 0; j < count[i]; j++) {
+            cout << " " << hash_server[i][j];
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
