@@ -1,0 +1,45 @@
+/*
+  Title: Rainfall Tracking
+  Problem Statement:
+  Write a program to track rainfall data for 3 cities over 4 months.
+  Using a 2D array, store the data, calculate the average rainfall
+  for each city, and display the rainfall data in a tabular format.
+
+  Data Structure Used: 2D Array
+*/
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    int cities = 3, months = 4;
+    float rainfall[cities][months];
+    float avg;
+
+    // Input rainfall data
+    for(int i = 0; i < cities; i++) {
+        cout << "\nEnter rainfall data for City " << i + 1 << ":" << endl;
+        for(int j = 0; j < months; j++) {
+            cout << "  Month " << j + 1 << ": ";
+            cin >> rainfall[i][j];
+        }
+    }
+
+    // Display header row
+    cout << "\nRainfall Data (in mm):\n";
+    cout << "City\tM1\tM2\tM3\tM4\tAvg" << endl;
+
+    // Display rainfall and calculate average
+    for(int i = 0; i < cities; i++) {
+        float sum = 0;
+        cout << "City " << i + 1 << "\t";
+        for(int j = 0; j < months; j++) {
+            cout << rainfall[i][j] << "\t";
+            sum += rainfall[i][j];
+        }
+        avg = sum / months; // calculate average rainfall for each city
+        cout << avg << endl;
+    }
+
+    return 0;
+}
