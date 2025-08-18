@@ -1,0 +1,46 @@
+/*
+  Title: Temperature Tracker
+  Problem Statement:
+  Write a program for tracking daily temperatures of 3 cities for a week.
+  The program calculates the average temperature for each day (across the cities)
+  and also the average temperature for the entire week.
+
+  Data Structure Used: 2D Array
+*/
+
+#include<iostream> 
+using namespace std;
+
+int main() {
+    float temperatures[3][7]; // 3 cities, 7 days
+    float dailyAvg, weeklySum = 0, weeklyAvg;
+    int city, day;
+
+    // Input temperature data
+    cout << "Enter temperatures for 3 cities over a week (7 days):\n";
+    for(city = 0; city < 3; city++) {
+        cout << "City " << city + 1 << ":\n";
+        for(day = 0; day < 7; day++) {
+            cout << "Day " << day + 1 << ": ";
+            cin >> temperatures[city][day];
+        }
+    }
+
+    // Calculate and display daily averages
+    cout << "\nDaily Average Temperatures:\n";
+    for(day = 0; day < 7; day++) {
+        dailyAvg = 0;
+        for(city = 0; city < 3; city++) {
+            dailyAvg += temperatures[city][day];
+        }
+        dailyAvg /= 3; // Average for that day across 3 cities
+        cout << "Day " << day + 1 << " Average: " << dailyAvg << " °C\n";
+        weeklySum += dailyAvg; // Add to the weekly total
+    }
+
+    // Calculate weekly average
+    weeklyAvg = weeklySum / 7;
+    cout << "\nWeekly Average Temperature: " << weeklyAvg << " °C\n";
+
+    return 0;
+}
