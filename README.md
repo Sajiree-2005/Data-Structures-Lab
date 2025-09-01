@@ -38,14 +38,8 @@ Each program is stored in a separate file with proper documentation and comments
 - [ ] **Web Crawling (BFS)** – Simulate web crawling using Breadth-First Search.  
 - [ ] **Web Crawling (DFS)** – Simulate web crawling using Depth-First Search.  
 
-### Unit 8
-- [ ] **Mini Project** – Implementation and report preparation.  
-
 ### Unit 9
-- [ ] **Content Beyond Syllabus** – Implement shortest path algorithms (Dijkstra’s / Single Source).  
-
-### Unit 10
-- [ ] **V Lab** – Generate Expression Tree.  
+- [ ] **Content Beyond Syllabus** – Implement shortest path algorithms (Dijkstra’s / Single Source).   
 
 ---
 
