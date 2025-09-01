@@ -1,0 +1,138 @@
+/*
+  Title: Simple Task Scheduler
+  Problem Statement:
+  Write a program that implements a simple task scheduler using a singly linked list.
+  Each task has a priority and execution time. Tasks are scheduled based on priority,
+  with higher priority tasks executed first. Tasks can also be executed based on
+  shortest execution time.
+  
+  Data Structures:
+  - Singly Linked List to maintain the order of tasks.
+  
+  Algorithm Used:
+  - Insertion based on priority.
+  - Bubble sort to execute tasks based on execution time.
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Task node representing a single task
+class Task {
+public:
+    string name;      // Name of the task
+    int priority;     // Priority of the task (higher number = higher priority)
+    int time;         // Execution time in milliseconds
+    Task* next;       // Pointer to the next task in the list
+};
+
+class TaskScheduler {
+private:
+    Task* head;       // Head pointer of the linked list
+
+public:
+    // Constructor initializes an empty list
+    TaskScheduler() : head(nullptr) {}
+
+    // Add a task based on priority
+    void addTask(const string& name, int priority, int time) {
+        Task* newTask = new Task();
+        newTask->name = name;
+        newTask->priority = priority;
+        newTask->time = time;
+        newTask->next = nullptr;
+
+        // Insert at head if list empty or new task has higher priority than head
+        if (!head || head->priority < priority) {
+            newTask->next = head;
+            head = newTask;
+        } else {
+            // Find correct position to insert based on priority
+            Task* current = head;
+            while (current->next && current->next->priority >= priority) {
+                current = current->next;
+            }
+            newTask->next = current->next;
+            current->next = newTask;
+        }
+    }
+
+    // Display tasks sorted by priority (highest first)
+    void displayTasksByPriority() const {
+        cout << "\nScheduled Tasks (Highest Priority First):\n";
+        Task* temp = head;
+        while (temp) {
+            cout << "Task: " << temp->name
+                 << ", Priority: " << temp->priority
+                 << ", Execution Time: " << temp->time << " ms\n";
+            temp = temp->next;
+        }
+    }
+
+    // Execute tasks sorted by execution time (shortest first)
+    void executeTasks() {
+        cout << "\nExecuting Tasks by shortest execution time:\n";
+
+        if (!head) {
+            cout << "No tasks to execute.\n";
+            return;
+        }
+
+        // Bubble sort linked list based on execution time
+        bool swapped;
+        do {
+            swapped = false;
+            Task* current = head;
+            while (current->next) {
+                if (current->time > current->next->time) {
+                    // Swap data fields instead of nodes for simplicity
+                    swap(current->time, current->next->time);
+                    swap(current->priority, current->next->priority);
+                    swap(current->name, current->next->name);
+                    swapped = true;
+                }
+                current = current->next;
+            }
+        } while (swapped);
+
+        // Print tasks in order of execution
+        Task* temp = head;
+        while (temp) {
+            cout << "Executing Task '" << temp->name
+                 << "' : " << temp->time << " ms...\n";
+            temp = temp->next;
+        }
+    }
+};
+
+int main() {
+    TaskScheduler scheduler;
+    int numTasks;
+
+    cout << "Enter number of tasks to schedule: ";
+    cin >> numTasks;
+
+    for (int i = 0; i < numTasks; ++i) {
+        string name;
+        int priority, time;
+
+        cout << "\nTask " << (i + 1) << " Name: ";
+        cin >> name;
+
+        cout << "Priority (higher number = higher priority): ";
+        cin >> priority;
+
+        cout << "Execution Time (in ms): ";
+        cin >> time;
+
+        scheduler.addTask(name, priority, time);
+    }
+
+    scheduler.displayTasksByPriority();
+    scheduler.executeTasks();
+
+    cout << "\nAll tasks executed.\n";
+
+    return 0;
+}
