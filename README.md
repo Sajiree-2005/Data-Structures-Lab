@@ -12,34 +12,34 @@ Each program is stored in a separate file with proper documentation and comments
 
 ## 📝 Programs
 
-### Unit 1
+### Practical 1
 - [ ] **Rainfall Tracking** – Track rainfall data for 3 cities over 4 months using 2D arrays.  
 - [ ] **Temperature Tracker** – Track daily temperatures of 3 cities for a week and calculate averages.  
 
-### Unit 2
+### Practical 2
 - [ ] **Game Development (Bubble Sort)** – Implement Bubble Sort in a simple game scenario.  
 - [ ] **Organizing Cards in Hand** – Implement Insertion Sort for arranging cards.  
 
-### Unit 3
+### Practical 3
 - [ ] **Load Balancing** – Implement a load balancing system using hashing.  
 
-### Unit 4
+### Practical 4
 - [ ] **Simple Task Scheduler** – Implement a task scheduler using a singly linked list.  
 
-### Unit 5
+### Practical 5
 - [ ] **Parenthesis Checker** – Implement a stack-based program to check balanced parentheses.  
 - [ ] **Syntax Parsing** – Convert infix expressions to postfix form.  
 
-### Unit 6
+### Practical 6
 - [ ] **Coffee Shop Line (Simple Queue)** – Implement a simple queue simulation.  
 - [ ] **Printer Spooler (Circular Queue)** – Implement a circular queue for print jobs.  
 
-### Unit 7
+### Practical 7
 - [ ] **Web Crawling (BFS)** – Simulate web crawling using Breadth-First Search.  
 - [ ] **Web Crawling (DFS)** – Simulate web crawling using Depth-First Search.  
 
-### Unit 9
-- [ ] **Content Beyond Syllabus** – Implement shortest path algorithms (Dijkstra’s / Single Source).   
+### Miniproject
+- [ ] **Miniproject** – Implement a miniproject.   
 
 ---
 
