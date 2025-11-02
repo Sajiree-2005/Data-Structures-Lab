@@ -1,0 +1,129 @@
+/*
+  Title: Syntax Parsing in Programming Languages (Infix to Postfix)
+  Problem Statement:
+  Parsing expressions is a key step in compilers and language processors.
+  This program accepts an infix expression and converts it to postfix notation.
+  - Input: Infix expression containing digits, parentheses, and operators (+, -, *, /, ^)
+  - Output: Corresponding postfix expression and its evaluated result
+  - Handles operator precedence and parentheses correctly
+
+  Algorithm Used: Stack implemented using an array
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Stack class
+class Stack {
+public:
+    char arr[100];
+    int top;
+
+    Stack() { top = -1; }
+
+    void push(char c) {
+        if (top < 99) arr[++top] = c;
+    }
+
+    void pop() {
+        if (top >= 0) top--;
+    }
+
+    char peek() {
+        if (top >= 0) return arr[top];
+        return '\0';
+    }
+
+    bool isEmpty() {
+        return top == -1;
+    }
+};
+
+// Return precedence of operators
+int precedence(char op) {
+    if (op == '+' || op == '-') return 1;
+    if (op == '*' || op == '/') return 2;
+    if (op == '^') return 3; // Exponent highest precedence (right-associative)
+    return 0;
+}
+
+// Check if character is an operator
+bool isOperator(char c) {
+    return (c == '+' || c == '-' || c == '*' || c == '/' || c == '^');
+}
+
+// Power function for exponentiation
+int power(int a, int b) {
+    int result = 1;
+    for (int i = 0; i < b; ++i) result *= a;
+    return result;
+}
+
+// Evaluate a postfix expression
+int evaluatePostfix(const string& postfix) {
+    Stack s;
+    for (char c : postfix) {
+        if (isdigit(c)) {
+            s.push(c);
+        } else if (isOperator(c)) {
+            int b = s.peek() - '0'; s.pop();
+            int a = s.peek() - '0'; s.pop();
+            switch (c) {
+                case '+': s.push(a + b + '0'); break;
+                case '-': s.push(a - b + '0'); break;
+                case '*': s.push(a * b + '0'); break;
+                case '/': s.push(a / b + '0'); break;
+                case '^': s.push(power(a, b) + '0'); break;
+            }
+        }
+    }
+    return s.peek() - '0';
+}
+
+// Convert infix to postfix
+string infixToPostfix(const string& infix) {
+    string postfix = "";
+    Stack s;
+    for (char c : infix) {
+        if (c == ' ') continue; // Skip whitespace
+        if (isdigit(c)) {
+            postfix += c;
+        } else if (c == '(') {
+            s.push(c);
+        } else if (c == ')') {
+            while (!s.isEmpty() && s.peek() != '(') {
+                postfix += s.peek();
+                s.pop();
+            }
+            if (!s.isEmpty()) s.pop(); // Pop '('
+        } else if (isOperator(c)) {
+            while (!s.isEmpty() && precedence(s.peek()) >= precedence(c)) {
+                if (c == '^' && s.peek() == '^') break; // Right-associative for ^
+                postfix += s.peek();
+                s.pop();
+            }
+            s.push(c);
+        }
+    }
+    while (!s.isEmpty()) {
+        postfix += s.peek();
+        s.pop();
+    }
+    return postfix;
+}
+
+// Main function
+int main() {
+    string infix, postfix;
+    cout << "Enter infix expression: ";
+    getline(cin, infix);
+
+    postfix = infixToPostfix(infix);
+    cout << "Postfix expression: " << postfix << endl;
+
+    int result = evaluatePostfix(postfix);
+    cout << "Evaluation result: " << result << endl;
+
+    return 0;
+}
