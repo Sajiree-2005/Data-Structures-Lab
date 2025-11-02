@@ -1,0 +1,94 @@
+/*
+  Title: Breadth First Search (BFS) for Web Page Indexing
+  Problem Statement:
+  Simulate the indexing of web pages for a search engine using BFS.
+  - Nodes: Represent web pages
+  - Edges: Represent hyperlinks
+  - BFS ensures pages at the same "depth" from the starting page are visited before moving deeper
+  - Input: Number of web pages, hyperlinks, and seed page
+  - Output: Indexed order of web pages
+
+  Algorithm Used: Breadth First Search (BFS) using a queue and adjacency matrix
+*/
+
+#include <iostream>
+using namespace std;
+
+#define MAX 10  // Maximum number of web pages
+
+int webGraph[MAX][MAX]; // Adjacency matrix for web links
+int visited[MAX];       // Visited pages
+int queueArr[MAX];      // Array to simulate queue
+int front = -1, rear = -1;
+
+// Enqueue function
+void enqueue(int node) {
+    if (rear == MAX - 1) return; // Queue full
+    if (front == -1) front = 0;
+    queueArr[++rear] = node;
+}
+
+// Dequeue function
+int dequeue() {
+    if (front == -1 || front > rear) return -1; // Queue empty
+    return queueArr[front++];
+}
+
+// Check if queue is empty
+bool isEmpty() {
+    return (front == -1 || front > rear);
+}
+
+// BFS Function
+void BFS(int start, int n) {
+    visited[start] = 1;
+    enqueue(start);
+    cout << "\nIndexing pages starting from: " << start << endl;
+
+    while (!isEmpty()) {
+        int current = dequeue();
+        cout << "Indexed page: " << current << endl;
+
+        // Visit all adjacent pages
+        for (int i = 0; i < n; i++) {
+            if (webGraph[current][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                enqueue(i);
+            }
+        }
+    }
+}
+
+int main() {
+    int n, e;
+    cout << "Enter number of web pages (max 10): ";
+    cin >> n;
+    cout << "Enter number of hyperlinks: ";
+    cin >> e;
+
+    // Initialize adjacency matrix
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            webGraph[i][j] = 0;
+
+    cout << "Enter links (from to):\n";
+    for (int i = 0; i < e; i++) {
+        int from, to;
+        cin >> from >> to;
+        webGraph[from][to] = 1; // Directed link
+    }
+
+    int start;
+    cout << "\nEnter seed/start page number: ";
+    cin >> start;
+
+    // Initialize visited array
+    for (int i = 0; i < n; i++)
+        visited[i] = 0;
+
+    BFS(start, n);
+
+    cout << "\nAll reachable pages have been indexed.\n";
+
+    return 0;
+}
