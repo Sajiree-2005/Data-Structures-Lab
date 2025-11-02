@@ -1,0 +1,68 @@
+/*
+  Title: Depth First Search (DFS) for Web Page Indexing
+  Problem Statement:
+  Simulate web page indexing for a search engine using DFS.
+  - Nodes: Represent web pages
+  - Edges: Represent hyperlinks
+  - DFS explores pages by following links deeply before backtracking
+  - Input: Number of web pages, hyperlinks, and seed/start page
+  - Output: Indexed order of web pages
+
+  Algorithm Used: Depth First Search (DFS) using recursion and adjacency matrix
+*/
+
+#include <iostream>
+using namespace std;
+
+#define MAX 10  // Maximum number of web pages
+
+int webGraph[MAX][MAX]; // Adjacency matrix for web links
+int visited[MAX];       // Visited pages
+
+// Recursive DFS Function
+void DFS(int node, int n) {
+    visited[node] = 1; // Mark current node as visited
+    cout << "Indexed page: " << node << endl;
+
+    // Visit all unvisited adjacent nodes
+    for (int i = 0; i < n; i++) {
+        if (webGraph[node][i] == 1 && visited[i] == 0) {
+            DFS(i, n);
+        }
+    }
+}
+
+int main() {
+    int n, e;
+    cout << "Enter number of web pages (max 10): ";
+    cin >> n;
+    cout << "Enter number of hyperlinks: ";
+    cin >> e;
+
+    // Initialize adjacency matrix
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            webGraph[i][j] = 0;
+
+    cout << "Enter links (from to):\n";
+    for (int i = 0; i < e; i++) {
+        int from, to;
+        cin >> from >> to;
+        webGraph[from][to] = 1; // Directed link
+    }
+
+    int start;
+    cout << "\nEnter seed (start) page number: ";
+    cin >> start;
+
+    // Initialize visited array
+    for (int i = 0; i < n; i++)
+        visited[i] = 0;
+
+    cout << "\nStarting DFS web crawling from page: " << start << endl;
+    DFS(start, n);
+
+    cout << "\nAll reachable pages have been indexed.\n";
+
+    return 0;
+}
